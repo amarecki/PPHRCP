@@ -11,15 +11,8 @@ from AeosDB import AeosDB
 import codecs
 import socket
 from shutil import copyfile
-
-
 from przejscia import sAccessPointIds, rcpAccessPointIds
-
-#print('Number of arguments: {}'.format(len(sys.argv)))
-#print('Argument(s) passed: {}'.format(str(sys.argv)))
-
 from datetime import datetime, timedelta
-
 
 def isValidReaderId(comaReaderId):
     return len(str(comaReaderId)) == 3
@@ -27,13 +20,9 @@ def isValidReaderId(comaReaderId):
 def isValidComaId(comaId):
     return len(comaId) == 6
 
-
 #czas wykonania raportu ustawiamy na  poprzednią godzinę
 timeOfReport = datetime.now() - timedelta(hours=1)
 timeOfReport = datetime(timeOfReport.year, timeOfReport.month, timeOfReport.day, timeOfReport.hour)
-
-
-
 
 print("Uruchomienie raportu RCP dla godziny", timeOfReport)
 
@@ -65,7 +54,6 @@ else:
     db = AeosDB("srv-sqlaeos", "AEOS3", "aeos", "DSt3D4jKmf8vhKyR") # nowa nazwa tego samego serwera i nowa baza danych
 
 sHour = timeOfReport.strftime("%Y%m%d%H")
-#data = db.rcpHourReport(sHour, sAccessPointIds)
 data = db.rcpHourReport2(sHour, sAccessPointIds)
 
 # jakiś okres, który nam uciekł chcieliśmy zaraportować
@@ -121,7 +109,6 @@ for i,r in enumerate(data):
 
     ftxt.write(line)
 
-
 finfo.write("Czytniki\r")
 finfo.write("--------\r")
 for i in sorted(czytniki.items()):
@@ -157,5 +144,4 @@ if not lokalnie:
     copyfile(srcerr, dsterr)
     copyfile(srcinfo, dstinfo)
     print("Środowisko produkcyjne, kopiowanie zakończone")
-
 
