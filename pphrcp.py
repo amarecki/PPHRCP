@@ -21,8 +21,8 @@ from przejscia import sAccessPointIds, rcpAccessPointIds
 from datetime import datetime, timedelta
 
 
-def isValidAccessPointId(accessPointId):
-    return len(str(accessPointId)) == 3
+def isValidReaderId(comaReaderId):
+    return len(str(comaReaderId)) == 3
 
 def isValidComaId(comaId):
     return len(comaId) == 6
@@ -59,9 +59,9 @@ osoby = {}
 #otwieramy bazę danych
 if lokalnie:
     # otwieramy bazę udostępnioną przez KomodiaRelay na porcie 1433
-    db = AeosDB("10.50.43.75", "AEOS", "aeos", "DSt3D4jKmf8vhKyR")
+    # trzeba zwrócić uwagę, czy Komodia udostępnia właściwy serwer SQL
+    db = AeosDB("10.50.43.75", "AEOS3", "aeos", "DSt3D4jKmf8vhKyR")
 else:
-    #db = AeosDB("srv-sql16", "AEOS", "aeos", "DSt3D4jKmf8vhKyR") # stara nazwa serwera i stara baza danych
     db = AeosDB("srv-sqlaeos", "AEOS3", "aeos", "DSt3D4jKmf8vhKyR") # nowa nazwa tego samego serwera i nowa baza danych
 
 sHour = timeOfReport.strftime("%Y%m%d%H")
@@ -69,20 +69,18 @@ sHour = timeOfReport.strftime("%Y%m%d%H")
 data = db.rcpHourReport2(sHour, sAccessPointIds)
 
 # jakiś okres, który nam uciekł chcieliśmy zaraportować
-#data = db.rcpHourReport3("20210602152000", "20210609210000", sAccessPointIds)
+# data = db.rcpHourReport3("20210602152000", "20210609210000", sAccessPointIds)
 
 for i,r in enumerate(data):
     print(i+1, r)
 
     accessPointId = str(r[0])
-    readerId = rcpAccessPointIds[accessPointId]
-    if not isValidAccessPointId(readerId):
-        ferr.write(f"Nieprawidłowy numer czytnika {readerId} {r[6]}({r[4]}:{r[5]})\r")
+    comaReaderId = rcpAccessPointIds[accessPointId]
+    if not isValidReaderId(comaReaderId):
+        ferr.write(f"Nieprawidłowy numer czytnika {comaReaderId} {r[6]}({r[4]}:{r[5]})\r")
         continue
 
     comaId = str(r[1])
-    #na chwilę
-    #comaId = "111111"
     if not isValidComaId(comaId):
         ferr.write(f"Nieprawidłowy numer COMA {comaId} ({r[8]} {r[7]})\r")
         continue
@@ -115,10 +113,10 @@ for i,r in enumerate(data):
     if kierunek==2 and business:
         typ=4
 
-    line = f"{readerId}{comaId}  {timestamp.strftime('%m%d%H%M')}{typ}0\r" 
+    line = f"{comaReaderId}{comaId}  {timestamp.strftime('%m%d%H%M')}{typ}0\r" 
     
     # wypisujemy użyte czytniki i osoby, żeby wpisać je do pliku info
-    czytniki[readerId] = r[6]
+    czytniki[comaReaderId] = r[6]
     osoby[comaId] = f"{r[8]} {r[7]}"
 
     ftxt.write(line)
