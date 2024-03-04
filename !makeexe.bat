@@ -1,0 +1,1 @@
+pyinstaller --onefile pphrcp.py
