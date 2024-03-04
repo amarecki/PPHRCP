@@ -11,7 +11,7 @@ from AeosDB import AeosDB
 import codecs
 import socket
 from shutil import copyfile
-from przejscia import sAccessPointIds, rcpAccessPointIds
+from przejscia import sAccessPointIds, rcpAccessPointIds, sBusinessAps, sBikeAps
 from datetime import datetime, timedelta
 
 def isValidReaderId(comaReaderId):
@@ -54,7 +54,7 @@ else:
     db = AeosDB("srv-sqlaeos", "AEOS3", "aeos", "DSt3D4jKmf8vhKyR") # nowa nazwa tego samego serwera i nowa baza danych
 
 sHour = timeOfReport.strftime("%Y%m%d%H")
-data = db.rcpHourReport2(sHour, sAccessPointIds)
+data = db.rcpHourReport2(sHour, sAccessPointIds, sBusinessAps, sBikeAps)
 
 # jakiś okres, który nam uciekł chcieliśmy zaraportować
 # data = db.rcpHourReport3("20210602152000", "20210609210000", sAccessPointIds)

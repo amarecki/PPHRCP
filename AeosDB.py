@@ -35,7 +35,7 @@ class AeosDB:
         cur.execute(sql)
         return cur
 
-    def rcpHourReport2(self, hour, accessPointIds):
+    def rcpHourReport2(self, hour, accessPointIds, sBusinessAps, sBikeAps):
         startTime = datetime.strptime(hour, "%Y%m%d%H")
         endTime = startTime + timedelta(hours=1)
         #print(startTime, endTime)
@@ -51,13 +51,15 @@ class AeosDB:
 
             ", business = (select count(*) "
                           "from view_eventlog el2 "
-		                  "where el2.accesspointid=305 " #accesspoint RCP
+#		                  "where el2.accesspointid=305 " #accesspoint RCP
+		                  f"where (el2.accesspointid in ({sBusinessAps}) OR el2.accesspointname='Business') " #accesspoint RCP
 			                    "and el2.personnelnr = el.personnelnr "
 			                    "and ABS(DATEDIFF(SECOND, el.timestamp, el2.timestamp)) < 8) " #różnica 6 sekund # powiększona do 8, bo niektórych zdarzeń nie było
 
             ", bike     = (select count(*) "
                           "from view_eventlog el2 "
-		                  "where el2.accesspointid=320 " #accesspoint Rower
+#		                  "where el2.accesspointid=320 " #accesspoint Rower
+		                  f"where (el2.accesspointid in ({sBikeAps}) OR el2.accesspointname='Bike') " #accesspoint Rower
 			                    "and el2.personnelnr = el.personnelnr "
 			                    "and ABS(DATEDIFF(SECOND, el.timestamp, el2.timestamp)) < 8) " #różnica 6 sekund # powiększona do 8, bo niektórych zdarzeń nie było
 

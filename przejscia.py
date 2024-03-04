@@ -32,14 +32,28 @@ rcpAccessPointIds = { "313": 614, #vGaraz-C-1
 
                       }
 
-# accesspoint, który oznacza wejście służbowe
-businessAP = 305 #RCP
 
-# accesspoint, który oznacza przyjazd rowerem
-bikeAP = 320 #Rower
+# accesspointy, które oznaczają wejście służbowe
+#businessAP = 305 #RCP
+businessAps = {305}
+sTemp = []
+for id in businessAps:
+    sTemp.append(str(id))
+sBusinessAps = ",".join(sTemp)
+#print(f'sBusinessAps={sBusinessAps}')
+
+# accesspointy, które oznaczają przyjazd rowerem
+#bikeAP = 320 #Rower
+bikeAps = {320}
+sTemp = []
+for id in bikeAps:
+    sTemp.append(str(id))
+sBikeAps = ",".join(sTemp)
+#print(f'sBikeAps={sBikeAps}')
 
 sTemp = []
 for id in rcpAccessPointIds.keys():
     sTemp.append(id)
 sAccessPointIds = ",".join(sTemp)
+#print(f'sAccessPointIds={sAccessPointIds}')
 
