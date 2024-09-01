@@ -27,7 +27,7 @@ timeOfReport = datetime(timeOfReport.year, timeOfReport.month, timeOfReport.day,
 print("Uruchomienie raportu RCP dla godziny", timeOfReport)
 
 lokalnie = True
-if socket.gethostname() != "AMIDELL":
+if socket.gethostname() != "AMIXPS": # zmienione z AMIDELL po przeniesieniu na AMIXPS
     lokalnie = False
     print("Uruchomienie w środowisku docelowym")
 else:
