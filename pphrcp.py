@@ -3,7 +3,6 @@
 # 2021-08-09 w związku z przeniesieniem części wspólnych na nowy serwer, uległy zmianie numery accesspointów i nazwa bazy danych
 
 # plik uruchomiony bez parametrów tworzy raport za poprzednią pełną godzinę zegarową
-# plik z parametrem yyyymmddhh tworzy raport z tej daty i godziny (pełnej, zegarowej)
 
 import sys
 import pyodbc 
@@ -22,6 +21,7 @@ def isValidComaId(comaId):
 
 #czas wykonania raportu ustawiamy na  poprzednią godzinę
 timeOfReport = datetime.now() - timedelta(hours=1)
+#timeOfReport = datetime.strptime("2025-01-07 08", "%Y-%m-%d %H") # awaryjne wywołanie dla wybranej godziny - jeśli nam coś umknie
 timeOfReport = datetime(timeOfReport.year, timeOfReport.month, timeOfReport.day, timeOfReport.hour)
 
 print("Uruchomienie raportu RCP dla godziny", timeOfReport)
@@ -48,7 +48,8 @@ osoby = {}
 #otwieramy bazę danych
 if lokalnie:
     # otwieramy bazę udostępnioną przez KomodiaRelay na porcie 1433
-    # trzeba zwrócić uwagę, czy Komodia udostępnia właściwy serwer SQL
+    # na serwerze jest zrobione przekierowanie portu 1433 do SQLa:
+    # netsh interface portproxy add v4tov4 listenport=1433 listenaddress=10.50.43.75 connectport=1433 connectaddress=10.50.36.106
     db = AeosDB("10.50.43.75", "AEOS3", "aeos", "DSt3D4jKmf8vhKyR")
 else:
     db = AeosDB("srv-sqlaeos", "AEOS3", "aeos", "DSt3D4jKmf8vhKyR") # nowa nazwa tego samego serwera i nowa baza danych

@@ -32,15 +32,16 @@ rcpAccessPointIds = { "313": 614, #vGaraz-C-1
                       "679": 102, # stg-d-vip-wyjazd
 
                       # nowe 2024-03-13 na podstawie ustaleń MMA
-                      "1004": 301, #dch-0-00-01:2Readers.1
+                      #"1004": 301, #dch-0-00-01:2Readers.1 # stare, zamienione 2024-10-29 na:
+                      "2402": 301, # rcp-dchnc-02:TNK.1
                       "2154": 302, #rcp-dchnc-01:2Readers.1
                       "2155": 801, #rcp-ipochem-01:2Readers.1
                       "2152": 702, #rcp-barska-01:2Readers.1
                       "2153": 201, #rcp-cube-01:2Readers.1
                       #"1553": 105, #stg-brama-2:2Readers.1
                       "2156": 106, #rcp-oczysz-01:2Readers.1
-                      #"631": 104, #stg-c-1-09:TNK.1
-                      #"646": 103, #stg-c-1-10:TNK.1
+                      "631": 104, #stg-c-1-09:TNK.1
+                      "646": 103, #stg-c-1-10:TNK.1
 
                       # zmienione 2024-03-21
                       #"1705": 408, #srdz-l8-01-01:TNK.1
